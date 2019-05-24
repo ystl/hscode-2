@@ -6,7 +6,6 @@
     <link type="text/css" rel="stylesheet" href="css/login.css">
     <link rel="icon" href="image/logo.ico">
 </head>
-<script type="text/javascript" src="js/checklogin.js"></script>
 <body  class="login_bj">
     <div>
         <form>
@@ -32,6 +31,37 @@
     </div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
+    
+    <script>
+        function login() {
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            var param = {
+                'username' : username,
+                'password' : password,
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+                data: param,
+                error: function(data) {
+                    console.log('error');
+                    console.log(data)
+                },
+                success: function(data){
+                    console.log(data);
+                    if(data['msg'] === 'success') {
+                        window.location.reload();
+                    }else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+    </script>
 
 
 
