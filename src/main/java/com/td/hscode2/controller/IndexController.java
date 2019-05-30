@@ -36,7 +36,7 @@ public class IndexController implements GlobalConstant {
     @RequestMapping("/home")
     public ModelAndView home(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("admin", session.getAttribute(SESSION_ATTR_KEY));
+        modelAndView.addObject("user", session.getAttribute(SESSION_ATTR_KEY));
         return modelAndView;
     }
 
