@@ -2,51 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
-    <link type="text/css" rel="stylesheet" href="css/login.css">
-    <link rel="icon" href="image/logo.ico">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录</title>
+    <link rel="stylesheet" href="/frame/layui/css/layui.css">
+    <link rel="stylesheet" href="/frame/static/css/style.css">
+    <link rel="icon" href="/image/logo.ico">
 </head>
-<body  class="login_bj">
-    <div>
-        <form>
+<body>
+<div style="margin: 0 auto; width: 70px; height: 70px; margin-top: 50px;">
+    <img src="/image/logo.ico" width="70px" height="70px">
+</div>
+<div class="login-main">
+    <header class="layui-elip">登录推点智能转译平台</header>
+    <form class="layui-form">
 
-            <div class="title">
-                <label>sign in</label>
+        <div class="layui-form-item layui-row">
+            <div class="layui-input-inline">
+                <input type="text" name="username" id="username" required lay-verify="required" placeholder="账号"
+                       value="admin"
+                       autocomplete="off"
+                       class="layui-input">
             </div>
-
-            <<div class="login_user">
-                <label>Username</label>
-                <input id="username" class="login_input">
-                <img src="image/user.svg" width="20px" height="20px" style="float: right">
+            <div class="layui-input-inline">
+                <input type="password" name="password" id="password" required lay-verify="required" placeholder="密码"
+                       value="admin"
+                       autocomplete="off"
+                       class="layui-input">
             </div>
-
-            <div class="login_password">
-                <label>Password</label>
-                <input id="password" class="login_input" type="password">
-                <img src="image/lock.svg" width="20px" height="20px" style="float: right">
+            <div class="layui-input-inline">
+                <div class="layui-col-md7">
+                    <input type="text" name="code" id="code" class="layui-input" placeholder="验证码" maxlength="4"/>
+                </div>
+                <div class="layui-col-md3 layui-col-lg-offset1">
+                    <img src="/verify" height="40px" alt=""
+                         style="cursor:pointer" id="verify">
+                </div>
             </div>
+        </div>
+        <div class="layui-form-item layui-row">
+            <div class="layui-input-inline login-btn">
+                <button lay-submit type="button" class="layui-btn" lay-filter="btn_login">登录</button>
+            </div>
+        </div>
 
-            <button type="button" id="login_btn" class="login_button" onclick="login()">Login</button>
-        </form>
-    </div>
 
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    
-    <script>
-        function login() {
+        <hr/>
+        <p><a href="#" class="fl">立即注册</a><a href="javascript:;"
+                                             class="fr">忘记密码？</a></p>
+    </form>
+</div>
 
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
 
-            var param = {
-                'username' : username,
-                'password' : password,
-            };
+<script src="/frame/layui/layui.js"></script>
+<script src="/js/jquery.min.js"></script>
 
+<script>
+    //Demo
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(btn_login)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            console.log('ok');
+            var param = data.field;
             $.ajax({
                 type: 'POST',
-                url: '/login',
+                url: 'login',
                 data: param,
+                beforeSend: function () {
+                    var index = layer.load(2, {
+                        shade: [0.1,'#DBDBDB'] //0.1透明度的白色背景
+                    });
+                },
                 error: function(data) {
                     console.log('error');
                     console.log(data)
@@ -54,16 +84,26 @@
                 success: function(data){
                     console.log(data);
                     if(data['msg'] === 'success') {
-                        window.location.reload();
+                        layer.msg("登录成功", {
+                            icon: 1, time: 1000, end: function () {
+                                window.location.reload();
+                            }
+                        });
                     }else {
-                        alert(data.msg);
+                        layer.msg(data.msg, {icon: 2, end: function () {
+                                window.location.reload();
+                            }});
                     }
                 }
             });
-        }
-    </script>
-
-
-
+            return false;
+        });
+    });
+</script>
+<script>
+    document.getElementById("verify").onclick = function () {
+        document.getElementById("verify").src = "/verify?time=" + new Date().getTime();
+    }
+</script>
 </body>
 </html>
