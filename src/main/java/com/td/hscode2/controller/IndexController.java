@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Controller
 public class IndexController implements GlobalConstant {
-
     @Resource
     UserRepository userRepository;
 
