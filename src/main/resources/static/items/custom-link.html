@@ -2,9 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>海关链接</title>
+    <link rel="stylesheet" href="../frame/layui/css/layui.css">
+    <link rel="stylesheet" href="../frame/static/css/style.css">
+    <link rel="icon" href="../image/logo.ico">
 </head>
 <body>
+<script>
+    localStorage.host = 'localhost:8090';
+</script>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend><i class="layui-icon">&#xe66c;</i>点击跳转</legend>
+</fieldset>
+<!--<div class="layui-container">-->
+    <!--<div class="layui-row layui-col-space28">-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo grid-demo-bg1"><a href="link"><img src="image">country_name</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo"><a href="http://www.customs.gov.cn/customs/302427/302442/jckszcx/index.html"><img src="../image/logo.ico">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo grid-demo-bg1"><a href="https://www.baidu.com"><img src="../image/logo.ico">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo"><a href="https://www.baidu.com"><img src="../image/logo.ico">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo grid-demo-bg1"><a href="https://www.baidu.com"><img src="../image/logo.ico">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国</a>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="layui-col-xs2">-->
+            <!--<div class="grid-demo"><a href="https://www.baidu.com"><img src="../image/logo.ico">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;推点</a>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="col-sm-6" style="padding-left: 30px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 box-item-title">
+            实时数据
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-bordered table-hover" id="work" style="width: 100%;">
+        </table>
+    </div>
+</div>
+
+<script src="../frame/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    function b() {
+        $.ajax({
+            type: "POST",
+            url: "list",
+            success: function (data) {
+                $("#work").html("");
+                $("#work").append("<tbody>");
+                data.forEach(function (item, index) {
+                    $("#work").append("<tr><td>" + item.CODE + "</td><td>" + item.name + "</td><td>" + item.typeName + "</td><td>" + item.workDate + "</td></tr>");
+                })
+                $("#work").append("</tbody>");
+            }
+        });
+    }
+    function fnc01() {
+
+        $.ajax({
+
+            url: "/list",
+
+            type: "POST",
+
+            cache: false,
+
+            data: {"link":link,"country_name":country_name},
+
+            dataType: "json",
+
+            success: function (data) {
+                console.log(data);
+            },
+
+            error: function () {
+                alert("数据异常")
+            }
+
+
+        });
+
+
+    }
+
+</script>
 
 </body>
 </html>

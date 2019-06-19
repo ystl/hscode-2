@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
+@Transactional
 public interface MenuRepository extends JpaRepository<Menu,Integer> {
     //查找所有的父菜单
     @Transactional
@@ -22,4 +22,10 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
     @Modifying
     @Query(value = "select * from menu m where m.father_id = :fatherId", nativeQuery = true)
     public List<Menu> findAllChildrenMenu(@Param("fatherId") int fatherId);
+
+
+
 }
+
+
+

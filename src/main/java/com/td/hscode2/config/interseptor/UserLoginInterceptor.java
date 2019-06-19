@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 @Component
 public class UserLoginInterceptor implements HandlerInterceptor, GlobalConstant {
     @Override
@@ -19,5 +18,6 @@ public class UserLoginInterceptor implements HandlerInterceptor, GlobalConstant 
             return false;
         }
         return true;
+
     }
 }
